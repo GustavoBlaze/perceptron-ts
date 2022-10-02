@@ -1,4 +1,4 @@
-import { assert } from "console";
+import assert from "assert";
 import * as R from "./random";
 
 type ConstructorProps = {
