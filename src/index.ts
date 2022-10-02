@@ -2,7 +2,8 @@ import { Perceptron } from "./perceptron";
 import * as R from "./random";
 
 R.seed(1);
-const perceptron = new Perceptron({length: 3});
+
+const perceptron = new Perceptron({ length: 3 });
 
 const inputs = [
   {
@@ -27,14 +28,12 @@ console.time("train");
 
 perceptron.train({
   inputs,
-  interactions: 15000,
+  interactions: 1_500_000,
 });
 
 console.timeEnd("train");
 
-console.log({
-  weights: perceptron.weights,
-});
+console.table({ weights: perceptron.weights });
 
 const table: any = [];
 
