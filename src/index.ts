@@ -1,38 +1,50 @@
-import {Neuron} from "./neuron";
+import { Perceptron } from "./perceptron";
+import * as R from "./random";
 
-const neuron = new Neuron({length: 3});
+R.seed(1);
+const perceptron = new Perceptron({length: 3});
 
+const inputs = [
+  {
+    values: [0, 0, 1],
+    expected: 0,
+  },
+  {
+    values: [1, 1, 1],
+    expected: 1,
+  },
+  {
+    values: [1, 0, 1],
+    expected: 1,
+  },
+  {
+    values: [0, 1, 1],
+    expected: 0,
+  },
+];
 
 console.time("train");
-neuron.train({
-  inputs: [
-    {
-      values: [0, 0, 1],
-      result: 0,
-    },
-    {
-      values: [1, 1, 1],
-      result: 1,
-    },
-    {
-      values: [1, 0, 1],
-      result: 1,
-    },
-    {
-      values: [0, 1, 1],
-      result: 0,
-    },
-  ],
-  interactions: 150000
-})
+
+perceptron.train({
+  inputs,
+  interactions: 15000,
+});
 
 console.timeEnd("train");
 
 console.log({
-  weights: neuron.weights,
+  weights: perceptron.weights,
 });
 
-console.log(neuron.think([0, 0, 1]))
-console.log(neuron.think([1, 1, 1]))
-console.log(neuron.think([1, 0, 1]))
-console.log(neuron.think([0, 0, 1]))
+const table: any = [];
+
+inputs.forEach((input) => {
+  const output = perceptron.think(input.values);
+
+  table.push({
+    input: input.values,
+    output,
+  });
+});
+
+console.table(table);
